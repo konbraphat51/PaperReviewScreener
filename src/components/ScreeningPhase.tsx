@@ -67,12 +67,6 @@ export function ScreeningPhase({
 		}
 	}
 
-	// Helper: Get canonical tag value from path (always full path from root, e.g. 'A/B/C')
-	function canonicalTagValueFromNode(node: TagNode, parentPath: string[] = []) {
-		const path = [...parentPath, node.value]
-		return path.join("/")
-	}
-
 	// Render tag tree with all nodes at the current level in a horizontal row, children below their parent row
 	const renderTagTree = (nodes: TagNode[], parentPath: string[] = []) => {
 		if (!nodes.length) return null
