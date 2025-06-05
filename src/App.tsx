@@ -31,9 +31,7 @@ function App() {
 		try {
 			BibTeXReader.parse(bibtexInput)
 			setArticle(new Article(bibtexInput))
-			setScreenResults(
-				defaultScreeningRules.map((rule) => ({rule, passed: false})),
-			)
+			setScreenResults(rules.map((rule) => ({rule, passed: false})))
 			setTags([])
 		} catch (e) {
 			alert("Invalid BibTeX")
@@ -63,9 +61,7 @@ function App() {
 		}))
 		setArticle(null)
 		setBibtexInput("")
-		setScreenResults(
-			defaultScreeningRules.map((rule) => ({rule, passed: false})),
-		)
+		setScreenResults(rules.map((rule) => ({rule, passed: false})))
 		setTags([])
 	}
 
