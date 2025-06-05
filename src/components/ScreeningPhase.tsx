@@ -73,49 +73,55 @@ export function ScreeningPhase({
 		return path.join("/")
 	}
 
-	// Render tag tree with tag name as the button, and tree structure represented only by button indentation (no lines)
-	const renderTagTree = (
-		nodes: TagNode[],
-		parentPath: string[] = [],
-		depth = 0,
-	) => (
-		<ul style={{listStyle: "none", paddingLeft: 0, marginLeft: 0}}>
-			{nodes.map((node) => {
-				const canonical = [...parentPath, node.value].join("/")
-				const hasChildren = !!node.children && node.children.length > 0
-				return (
-					<li
-						key={canonical}
-						style={{
-							marginLeft: depth * 24,
-							fontFamily: "monospace",
-							marginBottom: 2,
-							listStyle: "none",
-						}}
-					>
-						<Button
-							size="small"
-							variant="outlined"
-							onClick={() => onTagAdd(canonical)}
+	// Render tag tree with all nodes at the current level in a horizontal row, children below their parent row
+	const renderTagTree = (nodes: TagNode[], parentPath: string[] = []) => {
+		if (!nodes.length) return null
+		return (
+			<div
+				style={{
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "flex-start",
+					marginBottom: 16,
+				}}
+			>
+				{nodes.map((node) => {
+					const canonical = [...parentPath, node.value].join("/")
+					const hasChildren = !!node.children && node.children.length > 0
+					return (
+						<div
+							key={canonical}
 							style={{
-								minWidth: 80,
-								fontFamily: "monospace",
-								textTransform: "none",
+								display: "flex",
+								flexDirection: "row",
+								alignItems: "center",
+								marginRight: 24,
 							}}
 						>
-							{node.label}
-						</Button>
-						{hasChildren &&
-							renderTagTree(
-								node.children!,
-								[...parentPath, node.value],
-								depth + 1,
+							<Button
+								size="small"
+								variant="outlined"
+								onClick={() => onTagAdd(canonical)}
+								style={{
+									minWidth: 80,
+									fontFamily: "monospace",
+									textTransform: "none",
+									marginBottom: 4,
+								}}
+							>
+								{node.label}
+							</Button>
+							{hasChildren && (
+								<div style={{marginTop: 4}}>
+									{renderTagTree(node.children!, [...parentPath, node.value])}
+								</div>
 							)}
-					</li>
-				)
-			})}
-		</ul>
-	)
+						</div>
+					)
+				})}
+			</div>
+		)
+	}
 
 	const handleAddCustomTag = () => {
 		const trimmed = newTag.trim()
