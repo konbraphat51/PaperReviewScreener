@@ -1,13 +1,5 @@
 import React from "react"
-import {
-	Box,
-	Typography,
-	Paper,
-	TextField,
-	Button,
-	Stack,
-	IconButton,
-} from "@mui/material"
+import {Box, Typography, Paper, TextField, Button, Stack} from "@mui/material"
 import UploadFileIcon from "@mui/icons-material/UploadFile"
 
 export type DefineRulesPhaseProps = {
